@@ -21,4 +21,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, userRouter);
 app.use(routes.photo, mainRouter);
+
 export default app;

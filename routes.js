@@ -6,10 +6,9 @@ const FINDID = "/findID";
 const FINDPW = "/findPW";
 
 const USER = "/user";
-const ID = "/:id";
-const MYPAGE = "/:id/mypage";
-const PROFILE = "/:id/profile";
-const POSTING = "/:id/posting";
+const MYPAGE = "/mypage";
+const PROFILE = "/profile";
+const POSTING = "/posting";
 
 const PHOTO = "/photo";
 const ASIA = "/asia";
@@ -26,7 +25,6 @@ const routes = {
   findID: FINDID,
   findPW: FINDPW,
   user: USER,
-  id: ID,
   mypage: MYPAGE,
   profile: PROFILE,
   posting: POSTING,
