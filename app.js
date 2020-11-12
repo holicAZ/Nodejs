@@ -5,18 +5,50 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
 import mainRouter from "./router/mainRouter";
+import passport from "./config/passport";
 
 const app = express();
+const session = require("express-session");
+
+app.use(
+  session({
+    key: "sid", // 세션의 키값
+    secret: "secret", // 세션의 비밀 키 (암호화)
+    resave: false, // 세션을 항상 저장? false
+    saveUninitialized: true, // 세션을 uninitialize 로 저장
+    cookie: {
+      maxAge: 24000 * 60 * 60,
+    },
+  })
+);
 
 //db 연동을 위한 use
+
+const path = require('path');
+app.use('/views', express.static(path.join(__dirname,'views')))
+app.use('/node_modules', express.static(path.join(__dirname,'/node_modules')));
+app.use('/public',express.static(path.join(__dirname,'/public')));
+
+app.set("view engine", "ejs");
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(methodoverride("_method"));
+
+app.use(function(req,res,next){
+  res.locals.isAuthenticated =req.isAuthenticated();
+  res.locals.currentUser = req.user;
+  next();
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, userRouter);

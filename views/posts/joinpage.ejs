@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include('../partials/head') %>
+    
+</head>
+
+<body style="background-color:aliceblue">
+    
+    <%- include('../partials/nav') %>
+    <form action="/join" method="POST" style="text-align: left; margin-left: 20px; ">
+        <br>
+        이름<br>
+        <input name="name" type="text" required/><br><br>
+
+        ID <br>
+        <input type="text" id="id" name="id" /> &nbsp;&nbsp;
+        <input type="button" id="btn_check" value="중복 확인" disabled="disabled"/><br>
+        <span name = "idhelper" style="font-size: small; color:gray">id는 5자 이상</span><br><br>
+
+        password <br>
+        <input id="pw" name="pw" type="password"  /> <div id="_pwcheck"></div>
+        <span id="pwhelper" style="color:red"> </span> <br><br>
+
+        confirm <br>
+        <input id="pw2" name="pw2" type="password"  /> <div id="_pwcheck"></div>
+        <span id="confirmhelper" style="color:red"> </span><br><br>
+
+        휴대폰 <br>
+        <input id="phone" name="phone" type="text"  /><br>
+        <span id="phonehelper" style="color:red"> </span> <br>
+
+        <button class="btn btn-outline-info" type="submit" id="sm" disabled="disabled">가입하기</button>
+        <br>
+    </form>
+    
+    <br>
+    
+
+  
+<%- include('../partials/footer') %>
+
+  <%- include('../partials/js') %>
+</body>
+<script src="../../views/posts/idcheckfunc.js"></script>
+</html>
