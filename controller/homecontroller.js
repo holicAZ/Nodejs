@@ -3,67 +3,50 @@ import { response } from "express";
 import User from "../models/User";
 import userRouter from "../router/userRouter";
 import bcrypt from "bcrypt";
+import { model } from "mongoose";
 var passport = require('../config/passport');
-
+import session from "express-session";
+var isLogined = false;
 
 export const hc = (req, res) => {
-  res.render("posts/index");
+  console.log("hc");
+  console.log(req.isAuthenticated());
+  if(req.isAuthenticated()){ // 로그인 상태 확인
+    isLogined = true;
+  }else{
+    isLogined = false;
+  }
+  var username = req.flash('username')[0];
+  var errors = req.flash('errors')[0]||{};
+  console.log(isLogined);
+  res.render('posts/index',{
+    isLogined : isLogined // 전달을 어떻게 할것인가?
+  });
+  /*
+  if(req.session.logined){
+    console.log("login");
+    res.render("posts/index", {user_id : req.session.user_id, flag : req.session.logined});
+  }
+  else{
+    res.render("posts/index", null);
+  }
+  */
 };
 
-export const login = async(req, res) => {
+export const login = passport.authenticate('local',{
+  successRedirect:'/',
+  failureRedirect:'/getLogin',
+  failureFlash:true,
+});
   
-  var flag = false;
-  
-  try{
-    var point = 0;
-    const userID = req.body.username;
-    const userPW = req.body.password;
-
-    const arr = await User.find();
-    for(var i=0;i<arr.length;i++){ // 로그인 먼저, id check
-      if (arr[i]["id"] == userID) {
-        flag = true;
-        point = i;   
-        break;
-      }
-      else{
-        flag = false;
-      }  
-    }
-
-    console.log(arr[point]["id"]);
-    console.log(arr[point]["pw"]);
-    console.log(userID);
-    console.log(userPW);
-    console.log(flag);
-    
-    if(flag){
-      if(passport.authenticate('local-login')){ // 로그인 완료 => 홈 화면
-        console.log("1실행");
-        res.redirect("/");
-      }
-      else{ // 로그인 실패 => 다시 로그인 화면 (pw mismatch)
-        console.log("2실행");
-        res.redirect("/getLogin");  
-      }
-    }
-
-    else if(!flag){ // 로그인 실패 => 다시 로그인 화면 (id mismatch)
-      console.log("3실행");
-      res.redirect("/getLogin");
-    }
-  }
-  catch(error){
-      console.log(error);
-  }
-};
 
 export const logout = (req, res) => {
-  res.send("logout");
+  req.logout();
+  res.redirect('/');
 };
 
 export const getLogin = (req,res) =>{
-  res.render("posts/loginpage");
+  res.render('posts/loginpage',{isLogined:isLogined});
 }
 export const getJoin = (req,res) => {
   res.render("posts/joinpage");

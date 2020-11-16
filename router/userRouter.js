@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "../routes";
 import {
-  Gmypage,
+  mypage,
   GETuser,
   Pposting,
   Pprofile,
@@ -10,7 +10,7 @@ import {
 const userRouter = express.Router();
 
 userRouter.get(routes.home, GETuser);
-userRouter.get(routes.mypage, Gmypage);
+userRouter.get(routes.mypage, mypage);
 userRouter.post(routes.posting, Pposting);
 userRouter.get(routes.profile, Pprofile);
 

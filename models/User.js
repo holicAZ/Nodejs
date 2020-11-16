@@ -26,11 +26,13 @@ UserSchema.pre("save", function(next){
   }
 });
 
-UserSchema.methods.authenticate = function(password){
+
+UserSchema.methods.hashpw = function(password){
   var user = this;
-  return bcrypt/compareSync(password,user.pw);
+  return bcrypt.compare(password,user.password);
 };
 
-const model = mongoose.model("User", UserSchema);
 
-export default model;
+const User = mongoose.model("User", UserSchema);
+
+module.exports = User;

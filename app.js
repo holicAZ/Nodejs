@@ -9,10 +9,11 @@ import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
 import mainRouter from "./router/mainRouter";
-import passport from "./config/passport";
+import flash from "connect-flash";
 
-const app = express();
 const session = require("express-session");
+var passport = require("./config/passport");
+const app = express();
 
 app.use(
   session({
@@ -22,6 +23,7 @@ app.use(
     saveUninitialized: true, // 세션을 uninitialize 로 저장
     cookie: {
       maxAge: 24000 * 60 * 60,
+      secure: false
     },
   })
 );
@@ -41,17 +43,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodoverride("_method"));
 
-app.use(function(req,res,next){
-  res.locals.isAuthenticated =req.isAuthenticated();
-  res.locals.currentUser = req.user;
-  next();
-});
+
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
+app.use(firstmiddle);
 app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
-app.use(routes.user, userRouter);
+app.use(routes.user, firstmiddle, userRouter);
 app.use(routes.photo, mainRouter);
 
 export default app;

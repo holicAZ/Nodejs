@@ -1,10 +1,14 @@
 import Post from "../models/Post";
 export const GETuser = (req, res) => {
-  res.send("user");
+  console.log(req.isLogined);
+  if(req.isLogined)
+    res.send("true");
+  else
+    res.send("false");
 };
 
-export const Gmypage = (req, res) => {
-  res.send("mypage");
+export const mypage = (req, res) => {
+  res.render('posts/mypage');
 };
 
 export const Pprofile = (req, res) => {
