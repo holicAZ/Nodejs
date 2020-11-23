@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <%- include ('../partials/head') %>
+    <link
+    rel="stylesheet"
+    href="public/css/newpost.css">
+</head>
+
+<body>
+    <%- include ('../partials/nav') %>
+    
+    <div class="back_board"> 
+        <div class="back_front_board">
+            <h3>글 쓰기</h3>
+            
+        <form action="/newpost" method="POST" enctype="multipart/form-data">
+            <div class="top_board">
+                <input type="file" class="upload" id="upload" name="upload">
+                <br>
+                <div class="preview" id="preview">
+                
+            </div>
+            </div>
+            <div class="bottom-board">
+                <textarea name="comment" class="comment" id="comment" cols="50" rows="15" maxlength="500" wrap="hard" placeholder="500자 내로 입력하세요."></textarea>
+            </div>    <br>
+            <input type="submit" id="save" value="저장" class="save">
+            <br>
+        </form>
+        <br>
+    </div>
+    </div>
+    
+    <%- include ('../partials/footer') %>
+    <script src="../../views/posts/preview.js"></script>
+    <%- include ('../partials/js') %>
+</body>
+</html>

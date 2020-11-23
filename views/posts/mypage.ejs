@@ -2,8 +2,35 @@
 <html lang="ko">
 <head>
     <%- include ('../partials/head') %>
+<link
+  rel="stylesheet"
+  href="public/css/mpcs.css"/>
 </head>
+
 <body>
     <%- include ('../partials/nav') %>
+    <div class="maintable">
+        <div class="maintable_box">
+            <span class="maintable_headline">My page</span><br>
+            <img src="#" class="profile_img" height="600pc" width="600pc" > <br>
+            
+            <div class="maintable_userinfo">
+                <span class="maintable_userinfo_user">이 름 :</span>  <span class="user_info"><%= user_name %></span><br> 
+                <span class="maintable_userinfo_user">아 이 디 :</span> <span class="user_info"><%= user_id %></span> <br>
+            </div>
+        </div>
+        <button class="btn_change" >수정</button>
+
+        <hr>
+        <br>
+        <div>
+            여기에 글 목록 출력
+        </div>
+        <br>
+    </div>
+    
+    <%- include ('../partials/footer') %>
+    
+    <%- include ('../partials/js') %>
 </body>
 </html>

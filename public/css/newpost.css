@@ -1,0 +1,64 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+* {
+  font-family: "Nanum Gothic";
+}
+
+h3 {
+  text-shadow: 5%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.back_board {
+  border-right: 5px salmon solid;
+  border-top: 5px salmon solid;
+  margin-left: 30px;
+  margin-right: 30px;
+  text-align: center;
+  border-radius: 2%;
+  background-color: rgba(164, 216, 199, 0.568);
+}
+.back_front_board {
+  display: inline-block;
+  border: 2px rgb(126, 122, 122) dashed;
+  width: 700px;
+  max-width: 100%;
+}
+.preview {
+  display: inline-block;
+  border: 2px black solid;
+  width: 300px;
+  height: 400px;
+  margin-top: 1%;
+}
+img {
+  width: 300px;
+  height: 400px;
+}
+
+.upload {
+  margin-top: 1%;
+  padding: auto;
+  display: inline;
+}
+
+.comment {
+  border: 1px solid gainsboro;
+  margin: 10px;
+  max-width: 100%;
+  resize: none;
+}
+.top-board {
+  display: inline-block;
+  width: 50%;
+  height: 10%;
+}
+.bottom-board {
+  display: inline-block;
+  width: 80%;
+  height: 30%;
+}
+
+.save {
+  background-color: aliceblue;
+  border-radius: 5px;
+}

@@ -7,19 +7,15 @@ const FINDID = "/findID";
 const FINDPW = "/findPW";
 const GETJOIN = "/getJoin";
 const GETLOGIN = "/getLogin";
-
+const ALLPOST = "/allPost";
+const POSTING = "/newpost";
+const POSTINGFORM = "/postingform";
 
 const USER = "/user";
 const MYPAGE = "/mypage";
 const PROFILE = "/profile";
-const POSTING = "/posting";
 
-const PHOTO = "/photo";
-const ASIA = "/asia";
-const KOREA = "/asia/korea";
-const SEOUL = "/asia/korea/seoul";
-const BUSAN = "/asia/korea/busan";
-const JEJU = "/asia/korea/jeju";
+
 
 const routes = {
   home: HOME,
@@ -31,16 +27,12 @@ const routes = {
   getLogin : GETLOGIN,
   findID: FINDID,
   findPW: FINDPW,
+  allPost:ALLPOST,
   user: USER,
   mypage: MYPAGE,
   profile: PROFILE,
-  posting: POSTING,
-  photo: PHOTO,
-  asia: ASIA,
-  korea: KOREA,
-  seoul: SEOUL,
-  busan: BUSAN,
-  jeju: JEJU,
-};
+  newpost: POSTING,
+  postingform:POSTINGFORM,
+  };
 
 export default routes;

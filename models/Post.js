@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
-  title: { type: String },
   body: { type: String },
-  createAt: { type: Date },
+  author:{type:mongoose.Schema.Types.ObjectId, ref:'User',required:true},
+  numId:{type:Number},
+  attachment:{type:mongoose.Schema.Types.ObjectId, ref:'File'},
+  createAt: { type: Date, default:Date.now},
   updateAt: Date,
 });
 
-const Postmodel = mongoose.model("Post", PostSchema);
+const Post = mongoose.model("Post", PostSchema);
 
-export default Postmodel;
+export default Post;

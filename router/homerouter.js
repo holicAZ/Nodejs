@@ -9,9 +9,13 @@ import {
   pidcheck,
   getJoin,
   getLogin,
-  result
+  allPost,
+  newpost,
+  postingform,
 } from "../controller/homecontroller";
 import routes from "../routes";
+import multer from 'multer';
+var uploadfile = multer({dest:'upload_image/'});
 
 const homeRouter = express.Router();
 
@@ -24,4 +28,7 @@ homeRouter.post(routes.idcheck, pidcheck);
 homeRouter.get(routes.getJoin, getJoin);
 homeRouter.get(routes.getLogin, getLogin);
 homeRouter.get(routes.logout, logout);
+homeRouter.get(routes.allPost, allPost);
+homeRouter.post(routes.newpost,uploadfile.single('upload') ,newpost);
+homeRouter.get(routes.postingform,postingform);
 export default homeRouter;

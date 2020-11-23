@@ -1,12 +1,15 @@
-import { nextTick } from "async";
+import { find, nextTick } from "async";
 import { response } from "express";
 import User from "../models/User";
+import File from "../models/File";
+import Post from "../models/Post"
 import userRouter from "../router/userRouter";
 import bcrypt from "bcrypt";
 import { model } from "mongoose";
 var passport = require('../config/passport');
 import session from "express-session";
-var isLogined = false;
+import multer from 'multer';
+var isLogined;
 
 export const hc = (req, res) => {
   console.log("hc");
@@ -16,21 +19,11 @@ export const hc = (req, res) => {
   }else{
     isLogined = false;
   }
-  var username = req.flash('username')[0];
-  var errors = req.flash('errors')[0]||{};
+
   console.log(isLogined);
   res.render('posts/index',{
     isLogined : isLogined // 전달을 어떻게 할것인가?
   });
-  /*
-  if(req.session.logined){
-    console.log("login");
-    res.render("posts/index", {user_id : req.session.user_id, flag : req.session.logined});
-  }
-  else{
-    res.render("posts/index", null);
-  }
-  */
 };
 
 export const login = passport.authenticate('local',{
@@ -41,8 +34,11 @@ export const login = passport.authenticate('local',{
   
 
 export const logout = (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.session.destroy(function(err){
+    res.clearCookie('sid');
+    res.redirect('/');
+  });
+
 };
 
 export const getLogin = (req,res) =>{
@@ -100,3 +96,78 @@ export const PfindID = (req, res) => {
 export const PfindPW = (req, res) => {
   res.send("findPW");
 };
+
+export const allPost = (req,res) => {
+  File.find({})
+  .sort('-createdAt')
+  .exec(function(err,files){
+    if(err) return res.json(err);
+    res.render('posts/allpost',{
+      files:files,
+      isLogined:isLogined,
+    });
+  })
+  
+  
+}
+
+export const postingform = (req,res) =>{
+  if(isLogined){
+  Post.find({})
+  .populate('author')
+  .sort('-creatAt');
+  res.render("posts/newpost",{
+    isLogined:isLogined,
+  });
+}
+else{
+  res.redirect('/getLogin');
+}
+}
+
+export const newpost =  async (req, res) => {
+  var attachment = req.file? await File.createNewInstance(req.file,req.user._id):undefined;
+  req.body.upload = attachment;
+  req.body.author = req.user._id;
+
+
+  function getCurrDate() {
+    // 한국 시간을 맞추기 위한 함수
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var today = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    var milliseconds = date.getMilliseconds();
+    return new Date(
+      Date.UTC(year, month, today, hours, minutes, seconds, milliseconds)
+    );
+  }
+
+  const postBody = req.body.comment;
+  const time = getCurrDate();
+  
+  const post= new Post({
+    body: postBody,
+    createAt: time,
+    author : req.user._id,
+  });
+
+  if(attachment){
+    console.log("이미지 및 게시글 저장완료");
+    post.save();
+    attachment.postId = post._id;
+    console.log(post);
+    console.log(attachment);
+    console.log(post._id);
+    attachment.save();
+  }
+  else{
+    console.log("이미지 없이 저장완료")
+    post.save();
+  }
+  
+  res.redirect('/allpost');
+  };

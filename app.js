@@ -8,7 +8,6 @@ import bodyParser from "body-parser";
 import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
-import mainRouter from "./router/mainRouter";
 import flash from "connect-flash";
 
 const session = require("express-session");
@@ -32,8 +31,8 @@ app.use(
 
 const path = require('path');
 app.use('/views', express.static(path.join(__dirname,'views')))
-app.use('/node_modules', express.static(path.join(__dirname,'/node_modules')));
-app.use('/public',express.static(path.join(__dirname,'/public')));
+app.use('*/node_modules', express.static(path.join(__dirname,'/node_modules')));
+app.use('*/public',express.static(path.join(__dirname,'/public')));
 
 app.set("view engine", "ejs");
 app.use(helmet());
@@ -52,6 +51,6 @@ app.use(flash());
 app.use(firstmiddle);
 app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, firstmiddle, userRouter);
-app.use(routes.photo, mainRouter);
+
 
 export default app;

@@ -4,12 +4,15 @@ var User = require('../models/User');
 
 // serialize & deserialize User // 2
 passport.serializeUser((user, done)=> { //로그인 성공 시 실행
+  console.log("로그인 성공")
   console.log(user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done)=> { //로그인 요청이 들어오면 실행
-    done(null, id);
+  User.findOne({id:id})  
+  .then(user => done(null, user))
+  .catch(err=>done(err));
 });
 
 // local strategy // 3

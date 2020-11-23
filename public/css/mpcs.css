@@ -1,0 +1,70 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+* {
+  font-family: "Nanum Gothic";
+}
+
+/* 마이페이지 css */
+.maintable {
+  align-content: center;
+  background-color: whitesmoke;
+  line-height: 80px;
+  border-bottom: groove lightblue 5px;
+  border-right: groove lightblue 5px;
+  border-radius: 9px;
+  width: auto;
+  height: auto;
+  text-align: center;
+  margin: 37px;
+  line-height: 50px;
+}
+
+.maintable_box {
+  max-width: 500px;
+  max-height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.maintable_headline {
+  color: black;
+  font-size: 40px;
+}
+
+.maintable_userinfo {
+  text-align: center;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+.user_info {
+  margin-left: -10px;
+  color: black;
+  font-weight: bolder;
+}
+
+.maintable_userinfo_user {
+  color: gray;
+  float: left;
+}
+
+.profile_img {
+  margin: 10px;
+  height: 10pc;
+  width: 10pc;
+}
+
+.btn_change {
+  border-color: lightblue;
+  background-color: white;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+  margin: 10px;
+  width: 100px;
+  line-height: 15px;
+}
+
+.btn_change:hover {
+  background-color: skyblue;
+  color: white;
+}
