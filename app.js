@@ -33,6 +33,7 @@ const path = require('path');
 app.use('/views', express.static(path.join(__dirname,'views')))
 app.use('*/node_modules', express.static(path.join(__dirname,'/node_modules')));
 app.use('*/public',express.static(path.join(__dirname,'/public')));
+app.use('/upload_image',express.static(path.join(__dirname,'/upload_image')));
 
 app.set("view engine", "ejs");
 app.use(helmet());

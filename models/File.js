@@ -13,7 +13,7 @@ var File = mongoose.model('file',fileSchema);
 
 File.createNewInstance = async function(file, uploadedBy){
     return await File.create({
-        originalFileName:file.oreginalname,
+        originalFileName:file.originalname,
         serverFileName:file.filename,
         size:file.size,
         uploadedBy:uploadedBy,

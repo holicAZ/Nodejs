@@ -1,4 +1,4 @@
-import { find, nextTick } from "async";
+import { find, findSeries, nextTick } from "async";
 import { response } from "express";
 import User from "../models/User";
 import File from "../models/File";
@@ -10,6 +10,8 @@ var passport = require('../config/passport');
 import session from "express-session";
 import multer from 'multer';
 var isLogined;
+var fs = require('fs');
+var path = require('path');
 
 export const hc = (req, res) => {
   console.log("hc");
@@ -97,25 +99,22 @@ export const PfindPW = (req, res) => {
   res.send("findPW");
 };
 
-export const allPost = (req,res) => {
-  File.find({})
-  .sort('-createdAt')
-  .exec(function(err,files){
-    if(err) return res.json(err);
+export const allPost = async(req,res) => {
+    var image =[];
+    var arr = await File.find({});
+    for(var i=0;i<arr.length;i++){
+      var filePath = path.join('upload_image',arr[i].serverFileName);
+      image.push(filePath);
+    }
     res.render('posts/allpost',{
-      files:files,
       isLogined:isLogined,
-    });
-  })
-  
-  
+      image:image,
+    })  
 }
 
 export const postingform = (req,res) =>{
   if(isLogined){
-  Post.find({})
-  .populate('author')
-  .sort('-creatAt');
+  
   res.render("posts/newpost",{
     isLogined:isLogined,
   });
@@ -153,6 +152,7 @@ export const newpost =  async (req, res) => {
     body: postBody,
     createAt: time,
     author : req.user._id,
+    attachment : attachment,
   });
 
   if(attachment){
