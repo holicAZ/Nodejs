@@ -9,6 +9,7 @@ import { model } from "mongoose";
 var passport = require('../config/passport');
 import session from "express-session";
 import multer from 'multer';
+import { render } from "ejs";
 var isLogined;
 var fs = require('fs');
 var path = require('path');
@@ -100,21 +101,38 @@ export const PfindPW = (req, res) => {
 };
 
 export const allPost = async(req,res) => {
-    var image =[];
+    var image =[]; // 이미지 불러올 경로를 담는 배열
+    var linkpost =[]; // 이미지에 할당된 게시글 id값을 담을 배열
     var arr = await File.find({});
     for(var i=0;i<arr.length;i++){
       var filePath = path.join('upload_image',arr[i].serverFileName);
       image.push(filePath);
+      linkpost.push(arr[i].postId);
     }
     res.render('posts/allpost',{
       isLogined:isLogined,
       image:image,
+      linkpost:linkpost,
     })  
 }
 
+export const show = async(req,res) => {
+  var post = await Post.findOne({_id:req.params.id});
+  var img = await File.findOne({postId:req.params.id});
+
+  var filePath = path.join('upload_image',img.serverFileName);
+  console.log(post);
+  console.log(filePath);
+  res.render('posts/show',{
+    isLogined:isLogined,
+    post:post,
+    filePath:filePath
+  })  
+  
+};
+
 export const postingform = (req,res) =>{
   if(isLogined){
-  
   res.render("posts/newpost",{
     isLogined:isLogined,
   });
@@ -165,9 +183,12 @@ export const newpost =  async (req, res) => {
     attachment.save();
   }
   else{
-    console.log("이미지 없이 저장완료")
+    console.log("이미지 없이 저장완료");
     post.save();
   }
   
   res.redirect('/allpost');
   };
+
+  
+ 

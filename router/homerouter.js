@@ -10,6 +10,7 @@ import {
   getJoin,
   getLogin,
   allPost,
+  show,
   newpost,
   postingform,
 } from "../controller/homecontroller";
@@ -29,6 +30,7 @@ homeRouter.get(routes.getJoin, getJoin);
 homeRouter.get(routes.getLogin, getLogin);
 homeRouter.get(routes.logout, logout);
 homeRouter.get(routes.allPost, allPost);
+homeRouter.get(routes.show, show);
 homeRouter.post(routes.newpost,uploadfile.single('upload') ,newpost);
 homeRouter.get(routes.postingform,postingform);
 export default homeRouter;

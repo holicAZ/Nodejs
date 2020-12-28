@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    
+    <link
+    rel="stylesheet"
+    href="public/css/allpost.css"/>
+    <%- include ('../partials/head') %>
+    
+</head>
+
+<body>
+    <%- include ('../partials/nav') %>
+    
+    <main class="back_board"> 
+        <header class="head_1">
+            <div class="head_2">
+                <h1>#게시물</h1>
+            </div>
+        </header>
+        <img src="../<%=filePath%>"> <p></p>
+        <div class=body>
+            <span><%=post.body%></span>
+        </div>
+        
+    </main>
+    
+    <%- include ('../partials/footer') %>
+    <%- include ('../partials/js') %>
+</body>
+</html>

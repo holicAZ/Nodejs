@@ -1,3 +1,5 @@
+import { allPost } from "./controller/homecontroller";
+
 const HOME = "/";
 const LOGIN = "/login";
 const JOIN = "/join";
@@ -8,6 +10,7 @@ const FINDPW = "/findPW";
 const GETJOIN = "/getJoin";
 const GETLOGIN = "/getLogin";
 const ALLPOST = "/allPost";
+const SHOW = "/allpost/:id";
 const POSTING = "/newpost";
 const POSTINGFORM = "/postingform";
 
@@ -28,6 +31,7 @@ const routes = {
   findID: FINDID,
   findPW: FINDPW,
   allPost:ALLPOST,
+  show:SHOW,
   user: USER,
   mypage: MYPAGE,
   profile: PROFILE,
