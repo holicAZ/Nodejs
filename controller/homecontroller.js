@@ -116,19 +116,25 @@ export const allPost = async(req,res) => {
     })  
 }
 
-export const show = async(req,res) => {
-  var post = await Post.findOne({_id:req.params.id});
-  var img = await File.findOne({postId:req.params.id});
-
-  var filePath = path.join('upload_image',img.serverFileName);
-  console.log(post);
-  console.log(filePath);
-  res.render('posts/show',{
-    isLogined:isLogined,
-    post:post,
-    filePath:filePath
-  })  
+export const show = (req,res) => {
+  Post.findOne({_id:req.params.id})
+  .populate('author') // author 부분의 _id 값을 객체화
+  .populate('attachment','serverFileName originalFileName') // attachment 부분의 _id 값을 객체화 , 원하는 정보만 출력
+  .exec((err,data) => {
   
+    console.log(data);
+    //console.log(img);
+    var img = data.attachment.serverFileName;
+    var filePath = path.join('upload_image',img);
+    
+    res.render('posts/show',{
+      isLogined:isLogined,
+      post:data,
+      filePath:filePath
+    })  
+
+  });
+ 
 };
 
 export const postingform = (req,res) =>{

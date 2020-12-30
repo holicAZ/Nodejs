@@ -9,7 +9,7 @@ var fileSchema = mongoose.Schema({
     postId:{type:mongoose.Schema.Types.ObjectId,ref:'Post'},
 });
 
-var File = mongoose.model('file',fileSchema);
+var File = mongoose.model('File',fileSchema);
 
 File.createNewInstance = async function(file, uploadedBy){
     return await File.create({
