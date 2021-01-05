@@ -125,7 +125,7 @@ export const allPost = async(req,res) => {
       isLogined:isLogined,
       image:image,
       linkpost:linkpost,
-      currentPage:page,
+      page:page,
       maxPage:maxPage,
       limit:limit
     })  
