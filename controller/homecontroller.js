@@ -48,7 +48,7 @@ export const getLogin = (req,res) =>{
   res.render('posts/loginpage',{isLogined:isLogined});
 }
 export const getJoin = (req,res) => {
-  res.render("posts/joinpage");
+  res.render("posts/joinpage",{isLogined:isLogined});
 }
 
 export const pidcheck = async (req,res)=>{
@@ -103,7 +103,19 @@ export const PfindPW = (req, res) => {
 export const allPost = async(req,res) => {
     var image =[]; // 이미지 불러올 경로를 담는 배열
     var linkpost =[]; // 이미지에 할당된 게시글 id값을 담을 배열
-    var arr = await File.find({});
+    var page = Math.max(1,parseInt(req.query.page));
+    var limit = Math.max(1,parseInt(req.query.limit)); // 한 페이지에 담을 개체 수
+    page = !isNaN(page)?page:1;
+    limit = !isNaN(limit)?limit:9;
+
+    var skip = (page-1)*limit; // n페이지에 시작하느 객체 번호
+    var count = await File.countDocuments({}); // 객체 수
+    var maxPage = Math.ceil(count/limit); // 마지막 페이지
+
+    var arr = await File.find({})
+    .skip(skip)
+    .limit(limit);
+
     for(var i=0;i<arr.length;i++){
       var filePath = path.join('upload_image',arr[i].serverFileName);
       image.push(filePath);
@@ -113,12 +125,15 @@ export const allPost = async(req,res) => {
       isLogined:isLogined,
       image:image,
       linkpost:linkpost,
+      currentPage:page,
+      maxPage:maxPage,
+      limit:limit
     })  
 }
 
 export const show = (req,res) => {
   Post.findOne({_id:req.params.id})
-  .populate('author') // author 부분의 _id 값을 객체화
+  .populate('author','id') // author 부분의 _id 값을 객체화
   .populate('attachment','serverFileName originalFileName') // attachment 부분의 _id 값을 객체화 , 원하는 정보만 출력
   .exec((err,data) => {
   
