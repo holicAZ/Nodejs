@@ -83,3 +83,10 @@ div {
   margin: auto;
 }
 /* show.ejs */
+
+.show-img {
+  display: inline-block;
+  width: 70%;
+  height: 600px;
+  text-align: center;
+}
