@@ -18,7 +18,7 @@ const USER = "/user";
 const MYPAGE = "/mypage";
 const PROFILE = "/profile";
 
-
+const COMMENT = "/comment";
 
 const routes = {
   home: HOME,
@@ -37,6 +37,7 @@ const routes = {
   profile: PROFILE,
   newpost: POSTING,
   postingform:POSTINGFORM,
+  comment:COMMENT,
   };
 
 export default routes;

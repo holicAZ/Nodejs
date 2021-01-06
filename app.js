@@ -1,5 +1,6 @@
 import express from "express";
 import homeRouter from "./router/homerouter";
+import comments from "./router/comments"
 import { firstmiddle } from "./middlewares";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -9,6 +10,7 @@ import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
 import flash from "connect-flash";
+import util from "./util"
 
 const session = require("express-session");
 var passport = require("./config/passport");
@@ -50,8 +52,9 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(firstmiddle);
-app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
+app.use(routes.home, firstmiddle,util.getPostQueryString, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, firstmiddle, userRouter);
+app.use(routes.comment,util.getPostQueryString, comments);
 
 
 export default app;

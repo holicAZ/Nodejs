@@ -90,3 +90,24 @@ div {
   height: 600px;
   text-align: center;
 }
+
+.comment-box {
+  display: block;
+  width: 80%;
+  height: auto;
+  padding: auto;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.comment-text {
+  white-space: pre-line;
+}
+
+.comment-header {
+  display: inline-block;
+  margin-bottom: 50px;
+  background-color: rgba(121, 185, 241, 0.582);
+}

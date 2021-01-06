@@ -3,6 +3,7 @@ import { response } from "express";
 import User from "../models/User";
 import File from "../models/File";
 import Post from "../models/Post"
+import Comment from "../models/Comment"
 import userRouter from "../router/userRouter";
 import bcrypt from "bcrypt";
 import { model } from "mongoose";
@@ -131,8 +132,12 @@ export const allPost = async(req,res) => {
     })  
 }
 
-export const show = (req,res) => {
-  Post.findOne({_id:req.params.id})
+export const show = async (req,res) => {
+  var comments = await Comment.find({post:req.params.id})
+  .sort('createdAt')
+  .populate({path:'author',select:'id'})
+  
+  await Post.findOne({_id:req.params.id})
   .populate('author','id') // author 부분의 _id 값을 객체화
   .populate('attachment','serverFileName originalFileName') // attachment 부분의 _id 값을 객체화 , 원하는 정보만 출력
   .exec((err,data) => {
@@ -145,7 +150,8 @@ export const show = (req,res) => {
     res.render('posts/show',{
       isLogined:isLogined,
       post:data,
-      filePath:filePath
+      filePath:filePath,
+      comments:comments,
     })  
 
   });
