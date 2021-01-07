@@ -1,5 +1,7 @@
 import userRouter from "../router/userRouter";
-import bcrypt, { compareSync } from "bcrypt";
+import bcrypt from "bcrypt";
+import { reject } from "async";
+import { resolveInclude } from "ejs";
 
 var mongoose = require('mongoose');
 
@@ -10,27 +12,33 @@ const UserSchema = new mongoose.Schema({
   phoneNumber: String,
 });
 
-UserSchema.pre("save", function(next){
+UserSchema.pre('save', function(next){
   var user = this;
-  if(user.isModified("pw")){
-    bcrypt.genSalt(10,(err,salt) => {
+  if(user.isModified('pw')){
+    return bcrypt.genSalt(10,(err,salt) => {
       if(err) return next(err);
-      bcrypt.hash(user.pw, salt, (err,hash)=>{
+      return bcrypt.hash(user.pw, salt, (err,hash)=>{
         if(err) return next(err);
         user.pw = hash;
-        next();
+        return next();
       });
     });
   } else {
-    next();
+    return next();
   }
 });
 
 
-UserSchema.methods.hashpw = function(password){
-  var user = this;
-  return bcrypt.compare(password,user.password);
-};
+// UserSchema.methods.authenticate = function(password){
+//   var user = this;
+//   var ret;
+//   new Promise((resolve,reject)=>{
+//     bcrypt.compare(password,user.pw,(err,res)=>{
+//       if(err) reject(err)
+//       else resolve(res);
+//     });
+//   });
+// }
 
 
 const User = mongoose.model("User", UserSchema);

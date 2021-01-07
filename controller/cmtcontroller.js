@@ -1,7 +1,7 @@
 import Comment from "../models/Comment"
 import User from "../models/User"
 import Post from "../models/Post"
-import util from "../util"
+
 
 export const comment = (req,res) => {
     var post = req.query.postId;

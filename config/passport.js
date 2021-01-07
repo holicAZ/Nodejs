@@ -1,6 +1,7 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy; // 1
 var User = require('../models/User');
+var bcrypt = require('bcryptjs');
 
 // serialize & deserialize User // 2
 passport.serializeUser((user, done)=> { //로그인 성공 시 실행
@@ -10,29 +11,39 @@ passport.serializeUser((user, done)=> { //로그인 성공 시 실행
 });
 
 passport.deserializeUser((id, done)=> { //로그인 요청이 들어오면 실행
-  User.findOne({id:id})  
-  .then(user => done(null, user))
-  .catch(err=>done(err));
+  User.findOne({id:id},function(err,user){
+    done(null,user);
+  })
+  
 });
 
-// local strategy // 3
-passport.use(
+
+passport.use('local-login',
   new LocalStrategy({
-      usernameField : 'username', // 3-1
-      passwordField : 'password', // 3-1
+      usernameField : 'username', // login form id name
+      passwordField : 'password', // login form pw name
       passReqToCallback : true
     },
-    (req, username, password, done) => { // 3-2
+    function(req, username, password, done){ // 3-2
         console.log("3-2");
-        User.findOne({id:username},(err,user) => 
-      {   if (err) return done(err);
+        User.findOne({id:username})
+        .select('pw id')
+        .exec( async function(err,user) 
+        {
+          if (err) return done(err);
+          
+          var checkhash = await bcrypt.compare(password,user.pw); // hash pw 비교함수
+          console.log("user : ", user);
+          console.log("user.authenticate : ", checkhash);
 
-          if (user && user.hashpw(password)){ // 3-3
+          if (user && checkhash){ // 3-3
+            
             return done(null, user);
           }
           else {
-            req.flash('username', username);
-            req.flash('errors', {login:'The username or password is incorrect.'});
+            console.log('login false');
+           // req.flash('username', username);
+           // req.flash('errors', {login:'The username or password is incorrect.'});
             return done(null, false);
           }
         });

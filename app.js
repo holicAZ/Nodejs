@@ -10,7 +10,7 @@ import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
 import flash from "connect-flash";
-import util from "./util"
+
 
 const session = require("express-session");
 var passport = require("./config/passport");
@@ -46,15 +46,14 @@ app.use(bodyParser.json());
 app.use(methodoverride("_method"));
 
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
 app.use(firstmiddle);
-app.use(routes.home, firstmiddle,util.getPostQueryString, homeRouter); // 서버를 열었을때 라우팅
+app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, firstmiddle, userRouter);
-app.use(routes.comment,util.getPostQueryString, comments);
+app.use(routes.comment, comments);
 
 
 export default app;

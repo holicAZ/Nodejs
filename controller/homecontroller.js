@@ -30,10 +30,9 @@ export const hc = (req, res) => {
   });
 };
 
-export const login = passport.authenticate('local',{
+export const login = passport.authenticate('local-login',{
   successRedirect:'/',
   failureRedirect:'/getLogin',
-  failureFlash:true,
 });
   
 
