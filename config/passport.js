@@ -31,7 +31,7 @@ passport.use('local-login',
         .exec( async function(err,user) 
         {
           if (err) return done(err);
-          
+          // console.log("check-user : ",user.authenticate(password)); // User.js 단의 비교함수 반환
           var checkhash = await bcrypt.compare(password,user.pw); // hash pw 비교함수
           console.log("user : ", user);
           console.log("user.authenticate : ", checkhash);

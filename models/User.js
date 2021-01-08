@@ -31,7 +31,6 @@ UserSchema.pre('save', function(next){
 
 // UserSchema.methods.authenticate = function(password){
 //   var user = this;
-//   var ret;
 //   new Promise((resolve,reject)=>{
 //     bcrypt.compare(password,user.pw,(err,res)=>{
 //       if(err) reject(err)

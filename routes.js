@@ -19,6 +19,8 @@ const MYPAGE = "/mypage";
 const PROFILE = "/profile";
 
 const COMMENT = "/comment";
+const COMMENTEDIT = "/comment/:id";
+const COMMENTDELETE = "/comment/:id";
 
 const routes = {
   home: HOME,
@@ -38,6 +40,8 @@ const routes = {
   newpost: POSTING,
   postingform:POSTINGFORM,
   comment:COMMENT,
+  commentedit:COMMENTEDIT,
+  commentdelete:COMMENTDELETE,
   };
 
 export default routes;

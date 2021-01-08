@@ -1,6 +1,8 @@
 import express from "express"
 import{
     comment,
+    edit,
+    del
 } from "../controller/cmtcontroller"
 import Post from "../models/Post";
 import routes from "../routes";
@@ -17,6 +19,21 @@ function checkPostId(req, res, next){
     });
 }
 
+const noPermission = function(req, res){
+    req.flash('errors', {login:"You don't have permission"});
+    req.logout();
+    res.redirect('/login');
+  }
+
+function checkPermission(req,res,next){
+    Comment.findOne({_id:req.params.id}, function(err,comment){
+        if(err) return res.json(err);
+        if(comment.autor != req.user.id) return noPermission(req,res);   
+    });
+};
+
 comments.post(routes.home,checkPostId, comment);
+comments.put(routes.commentedit,checkPermission,checkPostId, edit);
+comments.delete(routes.commentdelete,checkPermission,checkPostId, del);
 
 export default comments;

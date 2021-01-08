@@ -1,0 +1,27 @@
+<head>
+    
+    <link
+    rel="stylesheet"
+    href="public/css/allpost.css"/>
+    
+</head>
+<div class="mt-3">
+
+    <form action="<%=actionUrl%>" method="post">
+      
+        <div class="row">
+          <div class="col-8">
+            <textarea name="text" rows="2" class="form-control "></textarea>
+          </div>
+          <div class="col-4">
+            <% if(comments._id){ %>
+                <button type="submit" class="btn btn-primary h-100 mr-2 pl-4 pr-4">Edit</button>
+      <a href="javascript:void(0)" onclick="$('#comment-<%= comment._id %>').removeClass('comment-edit-enabled')">Cancel</a>
+              <% } else { %>
+                <button type="submit" class="btn btn-primary h-100 mr-2">Add Comment</button>
+              <% } %>
+          </div>
+        </div>
+        
+    </form>
+  </div>
