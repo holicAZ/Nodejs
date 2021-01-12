@@ -10,7 +10,7 @@ import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
 import flash from "connect-flash";
-
+import methodOverride from "method-override";
 
 const session = require("express-session");
 var passport = require("./config/passport");
@@ -37,6 +37,7 @@ app.use('*/node_modules', express.static(path.join(__dirname,'/node_modules')));
 app.use('*/public',express.static(path.join(__dirname,'/public')));
 app.use('/upload_image',express.static(path.join(__dirname,'/upload_image')));
 
+app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
 app.use(helmet());
 app.use(morgan("dev"));

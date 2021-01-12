@@ -1,7 +1,7 @@
 import express from "express"
 import{
-    comment,
-    edit,
+    makecomment,
+    commentedit,
     del
 } from "../controller/cmtcontroller"
 import Post from "../models/Post";
@@ -32,8 +32,8 @@ function checkPermission(req,res,next){
     });
 };
 
-comments.post(routes.home,checkPostId, comment);
-comments.put(routes.commentedit,checkPermission,checkPostId, edit);
+comments.post(routes.home,checkPostId, makecomment);
+comments.put(routes.commentedit,checkPermission,checkPostId, commentedit);
 comments.delete(routes.commentdelete,checkPermission,checkPostId, del);
 
 export default comments;

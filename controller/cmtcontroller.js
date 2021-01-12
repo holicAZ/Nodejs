@@ -3,7 +3,7 @@ import User from "../models/User"
 import Post from "../models/Post"
 
 
-export const comment = (req,res) => {
+export const makecomment = (req,res) => {
     var post = req.query.postId;
     var author = req.user._id;
     var text = req.body.text;
@@ -20,18 +20,21 @@ export const comment = (req,res) => {
     return res.redirect('/allpost/'+post);
 }
 
-export const edit = (req,res)=>{
+export const commentedit = (req,res)=>{
+    console.log("수정");
     var post = req.query.postId;
-    var updateAt = Date.now();
-    var text = req.body.text;
-    Comment.findOneAndUpdate({_id:req.params.id}, {text:text}, {updateAt:updateAt}).exec();
+    
+    req.body.updateAt = Date.now();
+    Comment.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true},function(err,comment){
+        return res.redirect('/allpost/'+post);
+    });
 
-    return res.redirect('/allpost/'+post);
+    
 }
 
 export const del = (req,res) => {
     var post = req.query.postId;
-    Comment.findOne({_id:req.param.id},function(err,comment){
+    Comment.findOne({_id:req.params.id},function(err,comment){
         if(err) return err;
 
         comment.isDeleted = true;
