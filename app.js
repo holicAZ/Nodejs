@@ -10,8 +10,8 @@ import methodoverride from "method-override";
 import routes from "./routes";
 import userRouter from "./router/userRouter";
 import flash from "connect-flash";
-import methodOverride from "method-override";
 
+var methodOverride = require('method-override');
 const session = require("express-session");
 var passport = require("./config/passport");
 const app = express();
@@ -54,7 +54,7 @@ app.use(flash());
 app.use(firstmiddle);
 app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, firstmiddle, userRouter);
-app.use(routes.comment, comments);
+app.use(routes.comment, firstmiddle ,comments);
 
 
 export default app;

@@ -25,15 +25,17 @@ const noPermission = function(req, res){
     res.redirect('/login');
   }
 
-function checkPermission(req,res,next){
-    Comment.findOne({_id:req.params.id}, function(err,comment){
-        if(err) return res.json(err);
-        if(comment.autor != req.user.id) return noPermission(req,res);   
-    });
+async function checkPermission(req,res){
+   var comment = await Comment.findOne({_id:req.params.id})
+   .exec()
+    console.log(req.params.id);
+    if(err) return res.json(err);
+    if(comment.autor != req.user.id) return noPermission(req,res);   
+   
 };
 
 comments.post(routes.home,checkPostId, makecomment);
-comments.put(routes.commentedit,checkPermission,checkPostId, commentedit);
-comments.delete(routes.commentdelete,checkPermission,checkPostId, del);
+comments.post(routes.commentedit,commentedit);
+comments.delete(routes.commentdelete,checkPermission,checkPostId,del);
 
 export default comments;
