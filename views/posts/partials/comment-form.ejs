@@ -14,7 +14,7 @@
             <textarea name="text" rows="2" class="form-control "></textarea>
           </div>
           <div class="col-4">
-            <% if(comments._id){ %>
+            <% if(comment._id){ %>
                 <button type="submit" class="btn btn-primary h-100 mr-2 pl-4 pr-4">Edit</button>
       <a href="javascript:void(0)" onclick="$('#comment-<%= comment._id %>').removeClass('comment-edit-enabled')">Cancel</a>
               <% } else { %>

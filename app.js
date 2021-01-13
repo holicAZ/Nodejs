@@ -11,7 +11,7 @@ import routes from "./routes";
 import userRouter from "./router/userRouter";
 import flash from "connect-flash";
 
-
+var methodOverride = require('method-override');
 const session = require("express-session");
 var passport = require("./config/passport");
 const app = express();
@@ -37,6 +37,7 @@ app.use('*/node_modules', express.static(path.join(__dirname,'/node_modules')));
 app.use('*/public',express.static(path.join(__dirname,'/public')));
 app.use('/upload_image',express.static(path.join(__dirname,'/upload_image')));
 
+app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
 app.use(helmet());
 app.use(morgan("dev"));
@@ -53,7 +54,7 @@ app.use(flash());
 app.use(firstmiddle);
 app.use(routes.home, firstmiddle, homeRouter); // 서버를 열었을때 라우팅
 app.use(routes.user, firstmiddle, userRouter);
-app.use(routes.comment, comments);
+app.use(routes.comment, firstmiddle ,comments);
 
 
 export default app;
