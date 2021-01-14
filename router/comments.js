@@ -36,6 +36,6 @@ async function checkPermission(req,res){
 
 comments.post(routes.home,checkPostId, makecomment);
 comments.post(routes.commentedit,commentedit);
-comments.delete(routes.commentdelete,checkPermission,checkPostId,del);
+comments.delete(routes.commentdelete,del);
 
 export default comments;

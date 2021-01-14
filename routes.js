@@ -20,7 +20,7 @@ const PROFILE = "/profile";
 
 const COMMENT = "/comment";
 const COMMENTEDIT = "/:id";
-const COMMENTDELETE = "/comment/:id";
+const COMMENTDELETE = "/:id";
 
 const routes = {
   home: HOME,

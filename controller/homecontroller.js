@@ -132,6 +132,13 @@ export const allPost = async(req,res) => {
 }
 
 export const show = async (req,res) => {
+  var userid;
+  if(req.user==null){
+    userid =null;
+  }
+  else{
+    userid=req.user.id;
+  }
   var comments = await Comment.find({post:req.params.id})
   .sort('createdAt')
   .populate({path:'author',select:'id'})
@@ -151,6 +158,7 @@ export const show = async (req,res) => {
       post:data,
       filePath:filePath,
       comments:comments,
+      userid:userid
     })  
 
   });

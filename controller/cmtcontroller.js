@@ -32,17 +32,11 @@ export const commentedit = (req,res)=>{
     
 }
 
-export const del = (req,res) => {
+export const del = async (req,res) => {
     var post = req.query.postId;
-    Comment.findOne({_id:req.params.id},function(err,comment){
-        if(err) return err;
-
-        comment.isDeleted = true;
-        comment.save(function(err,comment){
-            if(err) return res.json(err);
-
-            return res.redirect('/allpost/'+post);
-        });
-    });
-};
+    var comment = await Comment.findOne({_id:req.params.id});
+        
+    comment.isDeleted = true;
+    return res.redirect('/allpost/'+post);
+    };
 
