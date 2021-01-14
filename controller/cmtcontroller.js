@@ -24,7 +24,7 @@ export const commentedit = (req,res)=>{
     console.log("수정");
     var post = req.query.postId;
     
-    req.body.updateAt = Date.now();
+    req.body.updatedAt = Date.now();
     Comment.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true},function(err,comment){
         return res.redirect('/allpost/'+post);
     });
@@ -37,6 +37,7 @@ export const del = async (req,res) => {
     var comment = await Comment.findOne({_id:req.params.id});
         
     comment.isDeleted = true;
+    comment.save();
     return res.redirect('/allpost/'+post);
     };
 

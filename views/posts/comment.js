@@ -14,3 +14,7 @@ $('button[name=edit]').on('click',function(){
     }
 })
 
+$('button[name=delete]').on('click',function(){
+    confirm('Do you want to delete this?')?this.parentElement.submit():null;
+})
+
