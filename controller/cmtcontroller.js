@@ -7,13 +7,16 @@ export const makecomment = (req,res) => {
     var post = req.query.postId;
     var author = req.user._id;
     var text = req.body.text;
+    var parent = req.body.parentComment;
     console.log(text);
     console.log(post);
     console.log(author);
+    console.log(parent);
     const com = new Comment({
         text:text,
         post:post,
-        author:author
+        author:author,
+        parentComment:parent
     });
     
     com.save();
@@ -39,5 +42,5 @@ export const del = async (req,res) => {
     comment.isDeleted = true;
     comment.save();
     return res.redirect('/allpost/'+post);
-    };
+};
 

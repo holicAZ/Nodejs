@@ -1,6 +1,7 @@
 
 
 var flag = false;
+var flag2 = false;
 
 $('button[name=edit]').on('click',function(){
     if(!flag){
@@ -16,5 +17,17 @@ $('button[name=edit]').on('click',function(){
 
 $('button[name=delete]').on('click',function(){
     confirm('Do you want to delete this?')?this.parentElement.submit():null;
+})
+
+$('button[name=reply]').on('click',function(){
+    if(!flag2){
+        $('div[name=reply-form]').removeClass("comment-reply")
+        flag2 = true;
+    }
+        
+    else{
+        $('div[name=reply-form]').addClass("comment-reply")
+        flag2 = false;
+    }
 })
 

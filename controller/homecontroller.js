@@ -10,7 +10,8 @@ import { model } from "mongoose";
 var passport = require('../config/passport');
 import session from "express-session";
 import multer from 'multer';
-import { render } from "ejs";
+
+var util = require('../util');
 var isLogined;
 var fs = require('fs');
 var path = require('path');
@@ -142,14 +143,15 @@ export const show = async (req,res) => {
   var comments = await Comment.find({post:req.params.id})
   .sort('createdAt')
   .populate({path:'author',select:'id'})
+  var commentTrees = util.convertToTrees(comments,'_id','parentComment','childComments');
   
   await Post.findOne({_id:req.params.id})
   .populate('author','id') // author 부분의 _id 값을 객체화
   .populate('attachment','serverFileName originalFileName') // attachment 부분의 _id 값을 객체화 , 원하는 정보만 출력
   .exec((err,data) => {
-  
+    
     console.log(data);
-    //console.log(img);
+    console.log(commentTrees);
     var img = data.attachment.serverFileName;
     var filePath = path.join('upload_image',img);
     
@@ -157,8 +159,8 @@ export const show = async (req,res) => {
       isLogined:isLogined,
       post:data,
       filePath:filePath,
-      comments:comments,
-      userid:userid
+      userid:userid,
+      commentTrees:commentTrees
     })  
 
   });
